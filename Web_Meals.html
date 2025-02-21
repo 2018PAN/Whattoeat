@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>吃什么？</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+            background-color: #ffe4e1;
+            color: #ff69b4;
+        }
+        h1 {
+            font-size: 28px;
+        }
+        .roll-button {
+            background: url('dice.png') no-repeat center;
+            background-size: contain;
+            width: 50px;
+            height: 50px;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+        #dish-list {
+            margin: 20px auto;
+            width: 80%;
+            max-width: 500px;
+            padding: 10px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        }
+        .dish-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            background-color: #fff0f5;
+            border-radius: 10px;
+            margin: 5px 0;
+            box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+        }
+        .dish-item button {
+            background-color: #ffccd5;
+            padding: 8px;
+            font-size: 14px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .dish-item button:hover {
+            background-color: #ff69b4;
+            color: white;
+            transform: scale(1.1);
+        }
+        #result {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 15px;
+            color: #ff1493;
+        }
+        input {
+            padding: 8px;
+            border-radius: 10px;
+            border: 1px solid #ff69b4;
+            width: 60%;
+            max-width: 300px;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .button-group button {
+            background-color: #ffb6c1;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .button-group button:hover {
+            background-color: #ff69b4;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>吃什么？</h1>
+    <button class="roll-button" onclick="pickRandomDish()"></button>
+    <h2 id="result">🤔</h2>
+    
+    <h3>🍜 当前菜品：</h3>
+    <div id="dish-list"></div>
+    
+    <input type="text" id="new-dish" placeholder="输入新菜名">
+    <div class="button-group">
+        <button onclick="addDish()">➕ 添加</button>
+        <button onclick="resetDishes()">🔄 复原</button>
+    </div>
+    
+    <script>
+        const dishKey = 'userDishes';
+        const defaultDishes = ["番茄炒蛋", "卤鸡爪", "芋头炖鸡腿", "卷心菜胡萝卜丝炒粉干", "蒸包子", "饺子", "汤圆", "虾仁炒蛋", "蛋炒饭", "蒸玉米", "玉米排骨汤", "绿豆粥", "土豆泥", "红烧土豆", "拍黄瓜", "海蜇皮"];
+        let dishes = JSON.parse(localStorage.getItem(dishKey)) || defaultDishes;
+        
+        function updateDishList() {
+            const list = document.getElementById('dish-list');
+            list.innerHTML = '';
+            dishes.forEach((dish, index) => {
+                const div = document.createElement('div');
+                div.classList.add('dish-item');
+                div.innerHTML = `${dish} <button onclick="removeDish(${index})">❌</button>`;
+                list.appendChild(div);
+            });
+            localStorage.setItem(dishKey, JSON.stringify(dishes));
+        }
+        
+        function pickRandomDish() {
+            if (dishes.length === 0) {
+                document.getElementById('result').innerText = "🤷‍♀️ 没有菜可选";
+                return;
+            }
+            const randomDish = dishes[Math.floor(Math.random() * dishes.length)];
+            document.getElementById('result').innerText = randomDish;
+        }
+        
+        function addDish() {
+            const newDish = document.getElementById('new-dish').value.trim();
+            if (newDish && !dishes.includes(newDish)) {
+                dishes.push(newDish);
+                updateDishList();
+            }
+            document.getElementById('new-dish').value = '';
+        }
+        
+        function removeDish(index) {
+            dishes.splice(index, 1);
+            updateDishList();
+        }
+        
+        function resetDishes() {
+            dishes = [...defaultDishes];
+            updateDishList();
+        }
+        
+        updateDishList();
+    </script>
+</body>
+</html>
