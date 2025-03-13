@@ -1,207 +1,210 @@
 <!DOCTYPE html>
 <html lang="zh">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>吃什么？</title>
-    <style>
-        body {
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            text-align: center;
-            background-color: #ffe4e1;
-            color: #ff69b4;
-        }
-
-        h1 {
-            font-size: 28px;
-        }
-
-        .tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .tab {
-            padding: 8px 16px;
-            cursor: pointer;
-            border-radius: 10px;
-            margin: 0 5px;
-            background-color: #ffb6c1;
-            transition: 0.3s;
-        }
-
-        .tab.active,
-        .tab:hover {
-            background-color: #ff69b4;
-            color: white;
-        }
-
-        .roll-button {
-            background: url('dice.png') no-repeat center;
-            background-size: contain;
-            width: 50px;
-            height: 50px;
-            border: none;
-            cursor: pointer;
-            display: inline-block;
-        }
-
-        #dish-list {
-            margin: 20px auto;
-            width: 80%;
-            max-width: 500px;
-            padding: 10px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .dish-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px;
-            background-color: #fff0f5;
-            border-radius: 10px;
-            margin: 5px 0;
-            box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .dish-item button {
-            background-color: #ffccd5;
-            padding: 8px;
-            font-size: 14px;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .dish-item button:hover {
-            background-color: #ff69b4;
-            color: white;
-            transform: scale(1.1);
-        }
-
-        input {
-            padding: 8px;
-            border-radius: 10px;
-            border: 1px solid #ff69b4;
-            width: 60%;
-            max-width: 300px;
-        }
-
-        .button-group {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .button-group button {
-            background-color: #ffb6c1;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 20px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .button-group button:hover {
-            background-color: #ff69b4;
-            color: white;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>吃什么？</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
+      background-color: #ffe4e1;
+      color: #ff69b4;
+    }
+    h1 { font-size: 28px; }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .tab {
+      padding: 8px 16px;
+      cursor: pointer;
+      border-radius: 10px;
+      margin: 0 5px;
+      background-color: #ffb6c1;
+      transition: 0.3s;
+    }
+    .tab.active,
+    .tab:hover {
+      background-color: #ff69b4;
+      color: white;
+    }
+    .roll-button {
+      background: url('dice.png') no-repeat center;
+      background-size: contain;
+      width: 50px;
+      height: 50px;
+      border: none;
+      cursor: pointer;
+      display: inline-block;
+    }
+    #dish-list {
+      margin: 20px auto;
+      width: 80%;
+      max-width: 500px;
+      padding: 10px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .dish-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px;
+      background-color: #fff0f5;
+      border-radius: 10px;
+      margin: 5px 0;
+      box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+    }
+    .dish-item button {
+      background-color: #ffccd5;
+      padding: 8px;
+      font-size: 14px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .dish-item button:hover {
+      background-color: #ff69b4;
+      color: white;
+      transform: scale(1.1);
+    }
+    input {
+      padding: 8px;
+      border-radius: 10px;
+      border: 1px solid #ff69b4;
+      width: 60%;
+      max-width: 300px;
+    }
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .button-group button {
+      background-color: #ffb6c1;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 20px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .button-group button:hover {
+      background-color: #ff69b4;
+      color: white;
+    }
+  </style>
 </head>
-
 <body>
-    <h1>今天吃什么？</h1>
-    <div class="tabs">
-        <div class="tab active" onclick="changeTab('breakfast')">早餐</div>
-        <div class="tab" onclick="changeTab('lunch')">午餐</div>
-        <div class="tab" onclick="changeTab('dinner')">晚餐</div>
-    </div>
+  <h1>今天吃什么？</h1>
+  <div class="tabs">
+    <div class="tab active" onclick="changeTab('breakfast')">早餐</div>
+    <div class="tab" onclick="changeTab('lunch')">午餐</div>
+    <div class="tab" onclick="changeTab('dinner')">晚餐</div>
+  </div>
 
-    <button class="roll-button" onclick="pickRandomDish()"></button>
-    <h2 id="result">🤔</h2>
+  <button class="roll-button" onclick="pickRandomDish()"></button>
+  <h2 id="result">🤔</h2>
 
-    <h3 id="current-meal">🍽️ 早餐菜单：</h3>
-    <div id="dish-list"></div>
+  <h3 id="current-meal">🍽️ 早餐菜单：</h3>
+  <div id="dish-list"></div>
 
-    <input type="text" id="new-dish" placeholder="输入新菜名">
-    <div class="button-group">
-        <button onclick="addDish()">➕ 添加</button>
-        <button onclick="resetDishes()">🔄 复原</button>
-    </div>
+  <input type="text" id="new-dish" placeholder="输入新菜名">
+  <div class="button-group">
+    <button onclick="addDish()">➕ 添加</button>
+    <button onclick="resetDishes()">🔄 复原</button>
+    <button onclick="setAsDefault()">💾 设为默认</button>
+  </div>
 
-    <script>
-        const meals = ['breakfast', 'lunch', 'dinner'];
-        const defaultDishes = {
-            breakfast: ["粥", "豆浆油条", "包子", "煎蛋"],
-            lunch: ["番茄炒蛋", "虾仁炒饭", "卤鸡爪", "土豆泥"],
-            dinner: ["玉米排骨汤", "拍黄瓜", "饺子", "汤圆"]
-        };
+  <script>
+    // 原始默认菜单
+    const defaultDishes = {
+      breakfast: ["粥", "豆浆油条", "包子", "煎蛋"],
+      lunch: ["番茄炒蛋", "虾仁炒饭", "卤鸡爪", "土豆泥"],
+      dinner: ["玉米排骨汤", "拍黄瓜", "饺子", "汤圆"]
+    };
 
-        let currentMeal = 'breakfast';
-        let dishes = JSON.parse(localStorage.getItem('dishes')) || defaultDishes;
+    // 当前餐别
+    let currentMeal = 'breakfast';
+    // 菜单数据，先从localStorage中获取，如没有则使用原始默认
+    let dishes = JSON.parse(localStorage.getItem('dishes')) || defaultDishes;
+    // 自定义默认菜单，从localStorage获取，初始为空对象
+    let customDefaultDishes = JSON.parse(localStorage.getItem('customDefaultDishes')) || {};
 
-        function updateDishList() {
-            document.getElementById('current-meal').innerText = `🍽️ ${currentMeal === 'breakfast' ? '早餐' : currentMeal === 'lunch' ? '午餐' : '晚餐'}菜单：`;
-            const list = document.getElementById('dish-list');
-            list.innerHTML = '';
-            dishes[currentMeal].forEach((dish, index) => {
-                const div = document.createElement('div');
-                div.classList.add('dish-item');
-                div.innerHTML = `${dish} <button onclick="removeDish(${index})">❌</button>`;
-                list.appendChild(div);
-            });
-            localStorage.setItem('dishes', JSON.stringify(dishes));
-        }
+    // 更新当前餐别的菜品列表
+    function updateDishList() {
+      document.getElementById('current-meal').innerText =
+        `🍽️ ${currentMeal === 'breakfast' ? '早餐' : currentMeal === 'lunch' ? '午餐' : '晚餐'}菜单：`;
+      const list = document.getElementById('dish-list');
+      list.innerHTML = '';
+      dishes[currentMeal].forEach((dish, index) => {
+        const div = document.createElement('div');
+        div.classList.add('dish-item');
+        div.innerHTML = `${dish} <button onclick="removeDish(${index})">❌</button>`;
+        list.appendChild(div);
+      });
+      localStorage.setItem('dishes', JSON.stringify(dishes));
+    }
 
-        function changeTab(meal) {
-            currentMeal = meal;
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelector(`.tab[onclick="changeTab('${meal}')"]`).classList.add('active');
-            updateDishList();
-        }
+    // 切换餐别标签
+    function changeTab(meal) {
+      currentMeal = meal;
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+      document.querySelector(`.tab[onclick="changeTab('${meal}')"]`).classList.add('active');
+      updateDishList();
+    }
 
-        function pickRandomDish() {
-            const mealDishes = dishes[currentMeal];
-            if (mealDishes.length === 0) {
-                document.getElementById('result').innerText = "🤷‍♀️ 没有菜可选";
-                return;
-            }
-            const randomDish = mealDishes[Math.floor(Math.random() * mealDishes.length)];
-            document.getElementById('result').innerText = randomDish;
-        }
+    // 随机选择一道菜
+    function pickRandomDish() {
+      const mealDishes = dishes[currentMeal];
+      if (mealDishes.length === 0) {
+        document.getElementById('result').innerText = "🤷‍♀️ 没有菜可选";
+        return;
+      }
+      const randomDish = mealDishes[Math.floor(Math.random() * mealDishes.length)];
+      document.getElementById('result').innerText = randomDish;
+    }
 
-        function addDish() {
-            const newDishInput = document.getElementById('new-dish');
-            const newDish = newDishInput.value.trim();
-            if (newDish && !dishes[currentMeal].includes(newDish)) {
-                dishes[currentMeal].push(newDish);
-                updateDishList();
-            }
-            newDishInput.value = '';
-        }
-
-        function removeDish(index) {
-            dishes[currentMeal].splice(index, 1);
-            updateDishList();
-        }
-
-        function resetDishes() {
-            dishes[currentMeal] = [...defaultDishes[currentMeal]];
-            updateDishList();
-            document.getElementById('modal').classList.add('show');
-        }
-
-
+    // 添加新菜品
+    function addDish() {
+      const newDishInput = document.getElementById('new-dish');
+      const newDish = newDishInput.value.trim();
+      if (newDish && !dishes[currentMeal].includes(newDish)) {
+        dishes[currentMeal].push(newDish);
         updateDishList();
-    </script>
-</body>
+      }
+      newDishInput.value = '';
+    }
 
+    // 删除某道菜
+    function removeDish(index) {
+      dishes[currentMeal].splice(index, 1);
+      updateDishList();
+    }
+
+    // 复原当前餐别菜单：若有自定义默认，则使用自定义默认，否则使用原始默认
+    function resetDishes() {
+      if (customDefaultDishes[currentMeal]) {
+        dishes[currentMeal] = [...customDefaultDishes[currentMeal]];
+      } else {
+        dishes[currentMeal] = [...defaultDishes[currentMeal]];
+      }
+      updateDishList();
+    }
+
+    // 将当前菜单设为自定义默认菜单
+    function setAsDefault() {
+      customDefaultDishes[currentMeal] = [...dishes[currentMeal]];
+      localStorage.setItem('customDefaultDishes', JSON.stringify(customDefaultDishes));
+      alert('当前菜单已设为默认菜单！');
+    }
+
+    updateDishList();
+  </script>
+</body>
 </html>
